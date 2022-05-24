@@ -1,4 +1,4 @@
-﻿using NSoup.Nodes;
+using NSoup.Nodes;
 using NSoup.Select;
 using System;
 using System.Collections.Generic;
@@ -50,6 +50,12 @@ namespace WpfApp7
             string ymText = dateTxt.Substring(0, 6);
             string dyText = dateTxt.Substring(6, 2);
 
+            bool ca = cba.IsChecked.HasValue ? cba.IsChecked.Value : false;
+            bool cb = cbb.IsChecked.HasValue ? cbb.IsChecked.Value : false;
+            bool cc = cbc.IsChecked.HasValue ? cbc.IsChecked.Value : false;
+            bool cd = cbd.IsChecked.HasValue ? cbd.IsChecked.Value : false;
+            bool ce = cbe.IsChecked.HasValue ? cbe.IsChecked.Value : false;
+
             if (dyText[0] == '0')
                 dyText = dyText.Substring(1, 1);
 
@@ -68,10 +74,13 @@ namespace WpfApp7
                     {
                         string val = btn.Val();
 
-                        if(!string.IsNullOrEmpty(val))
+                        if (!string.IsNullOrEmpty(val))
                         {
-                            found = true;
-                            break;
+                            if ((val[0] == 'A' && ca) || (val[0] == 'B' && cb) || (val[0] == 'C' && cc) || (val[0] == 'D' && cd) || (val[0] == 'E' && ce))
+                            {
+                                found = true;
+                                break;
+                            }
                         }
                     }
                     if (found)
@@ -115,6 +124,8 @@ namespace WpfApp7
             timer.Interval = TimeSpan.FromSeconds(sec);
             timer.Start();
             sss.Add("Started");
+            bta.IsEnabled = false;
+            btb.IsEnabled = true;
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -122,6 +133,8 @@ namespace WpfApp7
             timer.Stop();
             sss.Clear();
             sss.Add("Stopped");
+            bta.IsEnabled = true;
+            btb.IsEnabled = false;
         }
     }
 }
